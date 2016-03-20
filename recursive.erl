@@ -1,5 +1,6 @@
 -module(recursive).
--export([fac/1,len/1, fac_tail/1, duplicate/2, tail_duplicate/2, reverse/1, tail_reverse/1, sublist/2]).
+-export([fac/1,len/1, fac_tail/1, duplicate/2, tail_duplicate/2, reverse/1,
+tail_reverse/1, sublist/2, tail_sublist/2, lenient_zip/2, zip/2]).
 
 %%Returns factorial of N.
 fac(0)->1;
@@ -37,3 +38,15 @@ tail_reverse([H|T],Arr)->tail_reverse(T,[H|Arr]).
 sublist(0,_)->[];
 sublist(_,[])->[];
 sublist(N,[H|T])->H++sublist(N-1,T).
+
+tail_sublist(N,L)->tail_sublist(N,L,[]).
+tail_sublist(_,[],Acc)->Acc;
+tail_sublist(0,[],Acc)->Acc;
+tail_sublist(N,[H|T],Acc)->tail_sublist(N-1,T,[Acc|H]).
+
+zip([],[])->[];
+zip([X|Xs],[Y|Ys])->[{X,Y}|zip(Xs,Ys)].
+
+lenient_zip([],_)->[];
+lenient_zip(_,[])->[];
+lenient_zip([X|Xs],[Y|Ys])->[{X,Y}|lenient_zip(Xs,Ys)].
